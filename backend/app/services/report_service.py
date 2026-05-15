@@ -4,18 +4,30 @@ from app.models.indicator import Indicator
 
 def save_report(
     db,
-    parsed_email,
-    risk,
-    analyzed_urls,
+    analysis,
     raw_email
 ):
 
+    parsed_email = analysis["parsed_email"]
+
+    risk = analysis["risk_assessment"]
+
+    indicators = analysis["indicators"]
+
     report = Report(
-        sender=parsed_email["sender"],
-        subject=parsed_email["subject"],
-        risk_score=risk["score"],
-        verdict=risk["verdict"],
-        raw_email=raw_email.decode(errors="ignore")
+
+        sender=parsed_email.get("sender"),
+
+        subject=parsed_email.get("subject"),
+
+        risk_score=risk.get("score"),
+
+        verdict=risk.get("verdict"),
+
+        raw_email=raw_email.decode(errors="ignore"),
+
+        # FULL ANALYSIS STORED
+        analysis_data=analysis
     )
 
     db.add(report)
@@ -24,17 +36,37 @@ def save_report(
 
     db.refresh(report)
 
-    # Save URL indicators
-    for url_result in analyzed_urls:
+    # Save indicators separately too
+    for indicator_type, values in indicators.items():
 
-        indicator = Indicator(
-            report_id=report.id,
-            indicator_type="url",
-            value=url_result["url"],
-            malicious=url_result["suspicious"]
-        )
+        if isinstance(values, list):
 
-        db.add(indicator)
+            for item in values:
+
+                value = ""
+
+                malicious = False
+
+                if isinstance(item, dict):
+
+                    value = str(item)
+
+                    malicious = item.get(
+                        "suspicious",
+                        False
+                    )
+
+                else:
+                    value = str(item)
+
+                db_indicator = Indicator(
+                    report_id=report.id,
+                    indicator_type=indicator_type,
+                    value=value,
+                    malicious=malicious
+                )
+
+                db.add(db_indicator)
 
     db.commit()
 

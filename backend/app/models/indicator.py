@@ -1,4 +1,6 @@
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, TIMESTAMP
+from sqlalchemy.sql import func
+from sqlalchemy.orm import relationship
 
 from app.database import Base
 
@@ -11,11 +13,30 @@ class Indicator(Base):
 
     report_id = Column(
         Integer,
-        ForeignKey("reports.id")
+        ForeignKey("reports.id"),
+        nullable=False,
+        index=True
     )
 
-    indicator_type = Column(String(50))
+    indicator_type = Column(
+        String(50),
+        index=True,
+        nullable=False
+    )
 
-    value = Column(String(1000))
+    value = Column(String(1000), nullable=True)
 
     malicious = Column(Boolean, default=False)
+
+    severity = Column(String(20), default="low")  # low | medium | high | critical
+
+    created_at = Column(
+        TIMESTAMP,
+        server_default=func.now()
+    )
+
+    # Relationship back to Report
+    report = relationship(
+        "Report",
+        back_populates="indicators"
+    )

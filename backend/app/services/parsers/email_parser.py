@@ -20,11 +20,13 @@ def parse_eml(file_data):
     ).parsebytes(file_data)
 
     sender = msg.get("From")
-
     subject = msg.get("Subject")
 
-    body = ""
+    return_path = msg.get("Return-Path")
+    reply_to = msg.get("Reply-To")
 
+    body = ""
+    html_body = ""   
     attachments = []
 
     # Extract email body
@@ -33,14 +35,12 @@ def parse_eml(file_data):
         for part in msg.walk():
 
             content_type = part.get_content_type()
-
             disposition = str(part.get("Content-Disposition"))
 
             # Attachments
             if "attachment" in disposition:
 
                 filename = part.get_filename()
-
                 attachments.append(filename)
 
             # Plain text body
@@ -53,8 +53,9 @@ def parse_eml(file_data):
 
                 html = part.get_content()
 
-                soup = BeautifulSoup(html, "html.parser")
+                html_body += html  
 
+                soup = BeautifulSoup(html, "html.parser")
                 body += soup.get_text()
 
     else:
@@ -66,6 +67,9 @@ def parse_eml(file_data):
         "sender": sender,
         "subject": subject,
         "body": body,
+        "html_body": html_body,
         "urls": urls,
-        "attachments": attachments
+        "attachments": attachments,
+        "return_path": return_path,
+        "reply_to": reply_to
     }
