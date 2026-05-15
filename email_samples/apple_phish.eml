@@ -1,0 +1,23 @@
+Return-Path: <random123@gmail.com>
+Received: from mail.fakeapple.com (mail.fakeapple.com [192.0.2.1])
+    by smtp.emailserver.com (Postfix) with ESMTP id 1234ABCD
+    for <victim@example.com>; Sat, 25 May 2024 12:05:23 +0000 (UTC)
+From: Apple Support <support@apple.com>
+Reply-To: security-updates@apple-security-alert.com
+To: <victim@example.com>
+Subject: Urgent: Your Apple ID has been locked!
+Date: Sat, 25 May 2024 12:05:23 +0000
+Message-ID: <20240525120523.12345@mail.fakeapple.com>
+MIME-Version: 1.0
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <body>
+    <h2>Dear Customer,</h2>
+    <p>Your Apple ID has been temporarily locked for security reasons.</p>
+    <p>Please verify your account information immediately to avoid permanent suspension.</p>
+    <p><a href="http://apple.verify-account-security.com/login">Click here to verify your account</a></p>
+    <br>
+    <p>Thank you,<br>Apple Support Team</p>
+  </body>
+</html>

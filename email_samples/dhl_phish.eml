@@ -1,0 +1,23 @@
+Return-Path: <notification@dhl-delivery.com>
+Received: from smtp.fake-dhl.com (smtp.fake-dhl.com [198.51.100.2])
+    by mailserver.example.com (Postfix) with ESMTP id ABCD1234
+    for <victim@example.com>; Sat, 25 May 2024 14:35:09 +0000 (UTC)
+From: DHL Express <no-reply@dhl.com>
+Reply-To: support@dhl-package-tracking.com
+To: <victim@example.com>
+Subject: Action Required: Package Delivery Attempt Failed!
+Date: Sat, 25 May 2024 14:35:09 +0000
+Message-ID: <20240525143509.67890@smtp.fake-dhl.com>
+MIME-Version: 1.0
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <body>
+    <h2>Dear Customer,</h2>
+    <p>We attempted to deliver your package today but were unable to reach you.</p>
+    <p>To reschedule your delivery or provide additional information, please visit the link below:</p>
+    <p><a href="http://dhl.delivery-status-update.com/track">Track your package and update delivery info</a></p>
+    <br>
+    <p>Thank you,<br>DHL Express Support</p>
+  </body>
+</html>
